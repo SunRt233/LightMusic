@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single"
+		android:id="@+id/group1">
+        <item
+			android:checkable="true"
+            android:id="@+id/nav_homepage"
+            android:icon="@drawable/nav_homepage"
+            android:title="主页" />
+		<item
+			android:checkable="true"
+			android:id="@+id/nav_theme"
+			android:icon="@drawable/nav_theme"
+			android:title="主题" />
+        <item
+			android:checkable="true"
+            android:id="@+id/nav_developer"
+            android:icon="@drawable/nav_developer"
+            android:title="开发者选项" />
+        
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <!--<item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="分享" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="发送反馈" />-->
+			<item
+				android:id="@+id/nav_setting"
+				android:icon="@drawable/nav_setting"
+				android:title="设置" />
+			<item 
+				android:id="@+id/nav_about"
+				android:icon="@drawable/nav_about"
+				android:title="关于"/>
+        </menu>
+    </item>
+
+</menu>

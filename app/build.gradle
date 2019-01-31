@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    compileSdkVersion 24
+    buildToolsVersion "24.1.0"
 
     defaultConfig {
         applicationId "com.sunrt233.lightmusic"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -20,5 +20,9 @@ android {
 }
 
 dependencies {
+	compile 'com.android.support:cardview-v7:+'
+	compile 'com.android.support:appcompat-v7:+'
+	compile 'com.android.support:design:+'
+	compile 'com.android.support:support-v4:+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
