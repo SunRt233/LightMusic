@@ -27,7 +27,7 @@ public class HomeFragment extends Fragment
 	private TabLayout mTabLayout;
 	private MyViewPager mMyViewPager;
 	private AppBarLayout appbar;
-	//private SearchView searchView;
+	private MusicSearchView musicSearchView;
 	private ArrayList<View> viewList = new ArrayList<View>();
 	private ArrayList<String> titleList = new ArrayList<String>();
 	private Boolean isToolbarShowing = true;
@@ -85,10 +85,16 @@ public class HomeFragment extends Fragment
 		titleList.add("我的");
 		titleList.add("搜索");
 		
-		/*searchView = (SearchView) v2.findViewById(R.id.fragment_home_tab_search_searchView);
-		searchView.setFocusable(true);
-		searchView.requestFocus();
-		searchView.requestFocusFromTouch();*/
+		musicSearchView = (MusicSearchView) v2.findViewById(R.id.fragment_home_tab_search_musicSearchView);
+		musicSearchView.setOnSearchStartListener(new MusicSearchView.OnSearchStartListener(){
+
+				@Override
+				public void onStartSearch(String keyWord)
+				{
+					// TODO: Implement this method
+					mainActivity.printToast(keyWord,1);
+				}
+			});
 		
 		MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList,titleList);
 		mMyViewPager.setAdapter(adapter);
@@ -152,32 +158,6 @@ public class HomeFragment extends Fragment
 					// TODO: Implement this method
 				}
 			});
-		
-		Button btn = (Button) v1.findViewById(R.id.fragment_home_tab_mine_btn);
-		final TextView tv = (TextView) v2.findViewById(R.id.fragment_home_tab_search_tv);
-		btn.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View p1)
-				{
-					// TODO: Implement this method
-					//tv.setText("Hi from tab1");
-					
-					if(isToolbarShowing)
-					{
-						//mainActivity.getSupportActionBar().hide();
-						//appbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-						//isToolbarShowing = false;
-					}
-					else
-					{
-						//mainActivity.getSupportActionBar().show();
-						//appbar.animate().translationY(toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-						//isToolbarShowing = true;
-					}
-				}
-			});
-			
 		
 		/*musicbar.setTitle("megalovania");
 		musicbar.setSubtitle("TobyFox");
