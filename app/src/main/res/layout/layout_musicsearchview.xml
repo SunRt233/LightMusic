@@ -13,6 +13,7 @@
 		android:id="@+id/layout_musicsearchview_imgBtn"
 		android:scaleType="center"
 		app:srcCompat="@drawable/ic_search"
+		android:focusable="true"
 		android:layout_height="48dp"
 		android:layout_width="48dp"/>
 

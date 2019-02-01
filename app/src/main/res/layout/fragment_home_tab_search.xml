@@ -16,7 +16,7 @@
 		app:cardCornerRadius="4dp"
 		app:cardElevation="4dp">
 
-		<com.sunrt233.lightmusic.widget.MusicSearchView
+		<com.sunrt233.lightmusic.widget.MyMusicSearchView
 			android:id="@+id/fragment_home_tab_search_musicSearchView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>

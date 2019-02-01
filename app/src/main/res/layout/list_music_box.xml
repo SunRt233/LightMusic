@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="68dp"
+	android:clickable="true"
+	android:background="?attr/selectableItemBackground"
+	android:foreground="?attr/selectableItemBackground"
+	android:id="@+id/list_music_boxRelativeLayout">
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="horizontal"
+		android:layout_marginLeft="14dp"
+		android:layout_marginRight="52dp"
+		android:gravity="center">
+
+		<ImageView
+			android:id="@+id/list_music_boxImageView"
+			android:layout_height="46dp"
+			android:layout_width="46dp"
+			android:layout_marginRight="10dp"
+			android:scaleType="fitXY"/>
+
+		<LinearLayout
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:layout_height="67dp"
+				android:layout_width="match_parent"
+				android:orientation="vertical"
+				android:paddingLeft="10dp">
+
+				<TextView
+					android:id="@+id/list_music_boxMusicName"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:text="Large Text"
+					android:layout_marginTop="10dp"
+					android:textColor="#000000"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:lines="1"
+					android:ems="25"/>
+
+				<TextView
+					android:id="@+id/list_music_boxMusicAuthor"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Medium Text"
+					android:textColor="#000000"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/list_music_boxMenu"
+		android:layout_height="24dp"
+		android:layout_width="24dp"
+		android:layout_marginRight="20dp"
+		android:scaleType="fitXY"
+		android:layout_alignParentRight="true"
+		android:layout_centerInParent="true"
+		app:srcCompat="@drawable/ic_box_menu"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:clickable="true"/>
+
+	<View
+		android:background="#CCCCCC"
+		android:layout_height="1dp"
+		android:layout_width="match_parent"
+		android:layout_alignParentBottom="true"
+		android:layout_marginLeft="70dp"
+		android:layout_marginRight="32dp"/>
+
+</RelativeLayout>
+

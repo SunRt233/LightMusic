@@ -11,7 +11,7 @@ import com.sunrt233.lightmusic.*;
 
 import android.support.v7.widget.PopupMenu;
 
-public class MusicSearchView extends RelativeLayout
+public class MyMusicSearchView extends RelativeLayout
 {
 	private LinearLayout rootlayout;
 	private AppCompatImageView imgView;
@@ -20,7 +20,7 @@ public class MusicSearchView extends RelativeLayout
 	private PopupMenu menu;
 	private Boolean isFisrtTimeToEnter = true;
 
-	public MusicSearchView(Context context, AttributeSet attrs)
+	public MyMusicSearchView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 
@@ -73,11 +73,11 @@ public class MusicSearchView extends RelativeLayout
 				public boolean onKey(View p1, int p2, KeyEvent p3)
 				{
 					// TODO: Implement this method
-					if (p2 == KeyEvent.KEYCODE_ENTER&&p3.getAction() == KeyEvent.ACTION_DOWN)
+					if (p2 == KeyEvent.KEYCODE_ENTER && p3.getAction() == KeyEvent.ACTION_DOWN)
 					{
 						if (onSearchStartListener != null)
 						{
-							if (editText.getText() != null)
+							if (!isEmpty(editText.getText().toString()))
 							{
 								onSearchStartListener.onStartSearch(editText.getText().toString());
 							}
@@ -105,7 +105,7 @@ public class MusicSearchView extends RelativeLayout
 
 	}
 
-	public void setOnSearchStartListener(MusicSearchView.OnSearchStartListener mOnSearchStartListener)
+	public void setOnSearchStartListener(MyMusicSearchView.OnSearchStartListener mOnSearchStartListener)
 	{
 		onSearchStartListener = mOnSearchStartListener;
 	}
@@ -114,5 +114,19 @@ public class MusicSearchView extends RelativeLayout
 	{
 		public void onStartSearch(String keyWord);
 	}
+
+	public static boolean isEmpty(String string)
+	{
+		if (string == null || string.trim().length() == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}          
+	
 
 }

@@ -10,27 +10,33 @@ import android.view.View.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
 import com.sunrt233.lightmusic.adapter.*;
+import com.sunrt233.lightmusic.presenter.*;
 import com.sunrt233.lightmusic.ui.activity.*;
+import com.sunrt233.lightmusic.view.*;
 import com.sunrt233.lightmusic.widget.*;
 import java.util.*;
+
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.SearchView;
-import android.view.animation.*;
-import android.support.v4.widget.*;
+import android.util.*;
+import com.sunrt233.lightmusic.data.*;
+import android.support.v4.database.*;
 
-public class HomeFragment extends Fragment
+public class HomeFragment extends Fragment implements MusicSearchView
 {
-	private View view;
+	private View view,v1,v2;
 	private Toolbar toolbar,musicbar;
 	private MainActivity mainActivity;
 	private TabLayout mTabLayout;
 	private MyViewPager mMyViewPager;
 	private AppBarLayout appbar;
-	private MusicSearchView musicSearchView;
+	private MyMusicSearchView mMyMusicSearchView;
+	private RecyclerView mRecyclerView;
+	private MusicRecyclerViewAdapter mMusicRecyclerViewAdapter;
 	private ArrayList<View> viewList = new ArrayList<View>();
 	private ArrayList<String> titleList = new ArrayList<String>();
 	private Boolean isToolbarShowing = true;
+	private MusicSearchPresenter mMusicSearchPresenter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,12 +46,11 @@ public class HomeFragment extends Fragment
 		mainActivity = (MainActivity) getActivity();
 		
 		initToolbar();
-		initView();
-		initContents(inflater);
+		initView(inflater);
+		initContents();
 		setHasOptionsMenu(true);
 		
-		//mainActivity.getSupportActionBar().hide();
-		CoordinatorLayout.Behavior b;
+		mMusicSearchPresenter = new MusicSearchPresenterImpl(this);
 		
 		return view;
 	}
@@ -67,32 +72,34 @@ public class HomeFragment extends Fragment
 		
 	}
 	
-	public void initView()
+	public void initView(LayoutInflater l)
 	{
 		mTabLayout = (TabLayout) view.findViewById(R.id.fragment_home_tabLayout);
 		mMyViewPager = (MyViewPager) view.findViewById(R.id.fragment_home_myViewPager);
 		//musicbar = (Toolbar) view.findViewById(R.id.fragment_home_musiclbar);
+		v1 = l.inflate(R.layout.fragment_home_tab_mine,null);
+		v2 = l.inflate(R.layout.fragment_home_tab_search,null);
+		
+		mRecyclerView = (RecyclerView) v2.findViewById(R.id.fragment_home_tab_search_resultsView);
+		mMyMusicSearchView = (MyMusicSearchView) v2.findViewById(R.id.fragment_home_tab_search_musicSearchView);
 		
 	}
 	
-	public void initContents(LayoutInflater l)
+	public void initContents()
 	{
-		
-		View v1 = l.inflate(R.layout.fragment_home_tab_mine,null);
-		View v2 = l.inflate(R.layout.fragment_home_tab_search,null);
 		viewList.add(v1);
 		viewList.add(v2);
 		titleList.add("我的");
 		titleList.add("搜索");
 		
-		musicSearchView = (MusicSearchView) v2.findViewById(R.id.fragment_home_tab_search_musicSearchView);
-		musicSearchView.setOnSearchStartListener(new MusicSearchView.OnSearchStartListener(){
+		mMyMusicSearchView.setOnSearchStartListener(new MyMusicSearchView.OnSearchStartListener(){
 
 				@Override
 				public void onStartSearch(String keyWord)
 				{
 					// TODO: Implement this method
 					mainActivity.printToast(keyWord,1);
+					mMusicSearchPresenter.searchMusic(keyWord);
 				}
 			});
 		
@@ -159,11 +166,53 @@ public class HomeFragment extends Fragment
 				}
 			});
 		
+		
+//		Button btn = (Button) v1.findViewById(R.id.fragment_home_tab_mine_btn);
+//		btn.setOnClickListener(new OnClickListener(){
+//
+//				@Override
+//				public void onClick(View p1)
+//				{
+//					// TODO: Implement this method
+//					mMusicSearchPresenter.searchMusic("megalovania");
+//					Log.i("log","Strat search from HomeFragment");
+//				}
+//			});
+		
 		/*musicbar.setTitle("megalovania");
 		musicbar.setSubtitle("TobyFox");
 		musicbar.setLogo(R.drawable.ic_launcher);*/
 		
 		
+	}
+
+	@Override
+	public void showResults(ArrayList<DataList> dataLists,int resultSize)
+	{
+		// TODO: Implement this method
+		mainActivity.printToast("一共有" + resultSize + "个结果",1);
+		
+		if(mMusicRecyclerViewAdapter == null)
+		{
+			mMusicRecyclerViewAdapter = new MusicRecyclerViewAdapter(mainActivity.getApplicationContext(),dataLists);
+			mRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
+			mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+			mRecyclerView.setHasFixedSize(true);
+			mRecyclerView.setAdapter(mMusicRecyclerViewAdapter);
+			//mRecyclerView.
+		}
+		else
+		{
+			mMusicRecyclerViewAdapter.setNewList(dataLists);
+			mMusicRecyclerViewAdapter.notifyDataSetChanged();
+		}
+		
+	}
+
+	@Override
+	public void searchError()
+	{
+		// TODO: Implement this method
 	}
 	
 }
