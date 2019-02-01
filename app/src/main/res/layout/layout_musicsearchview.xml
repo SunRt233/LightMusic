@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="48dp"
+	android:orientation="horizontal"
+	android:focusable="true"
+	android:focusableInTouchMode="true"
+	android:id="@+id/layout_musicsearchview_rootlayout">
+
+	<android.support.v7.widget.AppCompatImageView
+		android:id="@+id/layout_musicsearchview_imgBtn"
+		android:scaleType="center"
+		app:srcCompat="@drawable/ic_search"
+		android:layout_height="48dp"
+		android:layout_width="48dp"/>
+
+	<android.support.v7.widget.AppCompatEditText
+		android:id="@+id/layout_musicsearchview_editText"
+		android:hint="歌曲/歌手"
+		android:singleLine="true"
+		android:layout_height="48dp"
+		android:layout_width="match_parent"
+		android:textCursorDrawable="@drawable/edittext_cursor"
+		android:background="@null"/>
+
+</LinearLayout>
+

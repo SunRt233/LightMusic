@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
-	
+
 	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -16,11 +16,10 @@
 		app:cardCornerRadius="4dp"
 		app:cardElevation="4dp">
 
-	<android.support.v7.widget.SearchView
-		android:id="@+id/fragment_home_tab_search_searchView"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
-	
+		<com.sunrt233.lightmusic.widget.MusicSearchView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+
 	</android.support.v7.widget.CardView>
 
 	<TextView
@@ -29,6 +28,18 @@
 		android:layout_height="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:text="Text"/>
+
+	<android.support.v4.widget.NestedScrollView
+		android:id="@+id/fragment_home_tab_search_resultsView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/large_text"/>
+
+	</android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>
 

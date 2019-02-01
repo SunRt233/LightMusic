@@ -6,7 +6,7 @@
         android:title="搜索"
 		android:icon="@drawable/abc_ic_search_api_material"
 		app:showAsAction="always|collapseActionView" 
-		app:actionViewClass="android.support.v7.widget.SearchView"/>
+		app:actionViewClass="com.sunrt233.lightmusic.widget.MusicSearchView"/>
     
     
 </menu>

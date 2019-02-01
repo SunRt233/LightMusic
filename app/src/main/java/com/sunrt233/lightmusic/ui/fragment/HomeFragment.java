@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
 import android.view.animation.*;
+import android.support.v4.widget.*;
 
 public class HomeFragment extends Fragment
 {
@@ -26,7 +27,7 @@ public class HomeFragment extends Fragment
 	private TabLayout mTabLayout;
 	private MyViewPager mMyViewPager;
 	private AppBarLayout appbar;
-	private SearchView searchView;
+	//private SearchView searchView;
 	private ArrayList<View> viewList = new ArrayList<View>();
 	private ArrayList<String> titleList = new ArrayList<String>();
 	private Boolean isToolbarShowing = true;
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment
 		setHasOptionsMenu(true);
 		
 		//mainActivity.getSupportActionBar().hide();
+		CoordinatorLayout.Behavior b;
 		
 		return view;
 	}
@@ -83,14 +85,14 @@ public class HomeFragment extends Fragment
 		titleList.add("我的");
 		titleList.add("搜索");
 		
-		searchView = (SearchView) v2.findViewById(R.id.fragment_home_tab_search_searchView);
+		/*searchView = (SearchView) v2.findViewById(R.id.fragment_home_tab_search_searchView);
 		searchView.setFocusable(true);
 		searchView.requestFocus();
-		searchView.requestFocusFromTouch();
+		searchView.requestFocusFromTouch();*/
 		
 		MyViewPagerAdapter adapter = new MyViewPagerAdapter(viewList,titleList);
 		mMyViewPager.setAdapter(adapter);
-		mMyViewPager.setCurrentItem(1,true);
+		mMyViewPager.setCurrentItem(0,true);
 		mMyViewPager.setOffscreenPageLimit(3);
 		
 		mTabLayout.setupWithViewPager(mMyViewPager,true);
@@ -122,6 +124,35 @@ public class HomeFragment extends Fragment
 			
 		);
 		
+		mMyViewPager.setOnPageChangeListener(new MyViewPager.OnPageChangeListener(){
+
+				@Override
+				public void onPageScrolled(int p1, float p2, int p3)
+				{
+					// TODO: Implement this method
+				}
+
+				@Override
+				public void onPageSelected(int p1)
+				{
+					// TODO: Implement this method
+					if(p1==1)
+					{
+						mainActivity.getSupportActionBar().hide();
+					}
+					else
+					{
+						mainActivity.getSupportActionBar().show();
+					}
+				}
+
+				@Override
+				public void onPageScrollStateChanged(int p1)
+				{
+					// TODO: Implement this method
+				}
+			});
+		
 		Button btn = (Button) v1.findViewById(R.id.fragment_home_tab_mine_btn);
 		final TextView tv = (TextView) v2.findViewById(R.id.fragment_home_tab_search_tv);
 		btn.setOnClickListener(new OnClickListener(){
@@ -130,18 +161,19 @@ public class HomeFragment extends Fragment
 				public void onClick(View p1)
 				{
 					// TODO: Implement this method
-					tv.setText("Hi from tab1");
+					//tv.setText("Hi from tab1");
+					
 					if(isToolbarShowing)
 					{
-						mainActivity.getSupportActionBar().hide();
+						//mainActivity.getSupportActionBar().hide();
 						//appbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-						isToolbarShowing = false;
+						//isToolbarShowing = false;
 					}
 					else
 					{
-						mainActivity.getSupportActionBar().show();
+						//mainActivity.getSupportActionBar().show();
 						//appbar.animate().translationY(toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
-						isToolbarShowing = true;
+						//isToolbarShowing = true;
 					}
 				}
 			});
@@ -153,15 +185,5 @@ public class HomeFragment extends Fragment
 		
 		
 	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		// TODO: Implement this method
-		inflater.inflate(R.menu.fragment_home_menu,menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-	
-	
 	
 }
