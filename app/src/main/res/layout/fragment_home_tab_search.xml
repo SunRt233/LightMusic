@@ -14,7 +14,8 @@
 		android:layout_marginEnd="@dimen/main_card_margin_horizontal"
 		android:layout_marginTop="@dimen/main_card_margin_vertical"
 		app:cardCornerRadius="4dp"
-		app:cardElevation="4dp">
+		app:cardElevation="4dp"
+		android:id="@+id/fragmenthometabsearchCardView1">
 
 		<com.sunrt233.lightmusic.widget.MyMusicSearchView
 			android:id="@+id/fragment_home_tab_search_musicSearchView"
@@ -26,7 +27,8 @@
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/fragment_home_tab_search_resultsView"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+		android:layout_height="match_parent"
+		android:layout_below="@id/fragmenthometabsearchCardView1"/>
 
 </RelativeLayout>
 

@@ -31,6 +31,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		switchFragment(homefragment,R.id.activity_main_frameLayout);
 		
 		setExitMode(EXIT_MODE_TWICE);
+		
+		//overridePendingTransition(R.anim.bottom_up,R.anim.bottom_down);
+		
     }
 
 	@Override

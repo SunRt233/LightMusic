@@ -27,7 +27,7 @@ public class BitmapUtils
 						final Bitmap bitmap = BitmapFactory.decodeStream(in,new Rect(),options);
 						in.close(); 
 
-						images.add(bitmap);
+						//images.add(bitmap);
 
 						i.post(new Runnable(){
 

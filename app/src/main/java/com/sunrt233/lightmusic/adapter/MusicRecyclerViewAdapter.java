@@ -6,11 +6,15 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
+import com.sunrt233.lightmusic.adapter.*;
 import com.sunrt233.lightmusic.data.*;
 import com.sunrt233.lightmusic.utils.*;
 import java.util.*;
 
 import android.support.v7.widget.PopupMenu;
+import com.sunrt233.lightmusic.ui.activity.*;
+import android.util.*;
+import android.widget.AbsoluteLayout.*;
 
 public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecyclerViewAdapter.MyViewHolder>
 {
@@ -20,6 +24,7 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	private OnItemPopupMenuItemClickListener mOnItemPopupMenuItemClickListener;
 	private List<Bitmap> artWorkImages = null;
 	private Context mContext;
+	private Boolean isFirstTimeToRun = true;
 
 	public MusicRecyclerViewAdapter(ArrayList<DataList> d, View.OnClickListener onClickListener)
 	{
@@ -51,33 +56,51 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	public void onBindViewHolder(final MusicRecyclerViewAdapter.MyViewHolder holder, final int p2)
 	{
 		// TODO: Implement this method
+		
+		/*if(p2 == 0 && isFirstTimeToRun)
+		{
+			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(holder.rootLayout.getLayoutParams());
+			lp.setMargins(0,dip2px(mContext,68),0,0);
+			holder.rootLayout.setLayoutParams(lp);
+			isFirstTimeToRun = false;
+		}*/
 
 		holder.musicName.setText(dl.get(p2).getMusicName());
 		holder.musicAuthor.setText(dl.get(p2).getMusicAuthor());
-		BitmapUtils.setBitmapFromNetWork(dl.get(p2).getImageUrl(), holder.artWorkImage, null);
-		//final PopupMenu menu = new PopupMenu(mContext,holder.popupMenu);
-		//menu.getMenuInflater().inflate(R.menu.list_music_box_popupmenu,menu.getMenu());
-
+		//BitmapUtils.setBitmapFromNetWork(dl.get(p2).getImageUrl(), holder.artWorkImage, null);
+		holder.artWorkImage.setVisibility(View.GONE);
+		//Toast.makeText(mContext,dl.get(p2).getImageUrl(),Toast.LENGTH_SHORT).show();
 		holder.rootLayout.setOnClickListener(new View.OnClickListener(){
 
 				@Override
 				public void onClick(View p1)
 				{
 					int position = holder.getLayoutPosition();
-					mOnItemClickListener.onItemClick(holder.itemView, position, dl.get(p2));
+					if(mOnItemClickListener != null)
+					{
+						mOnItemClickListener.onItemClick(holder.itemView, position, dl.get(p2));
+					}
 					// TODO: Implement this method
 				}
 			});
 
-		holder.popupMenu.setOnClickListener(new View.OnClickListener(){
+		holder.popupMenu.setOnTouchListener(new AppCompatImageView.OnTouchListener(){
 
 				@Override
-				public void onClick(View p1)
+				public boolean onTouch(View p1, MotionEvent p2)
 				{
 					// TODO: Implement this method
-					PopupMenu menu = new PopupMenu(mContext, p1);
-					menu.getMenuInflater().inflate(R.menu.list_music_box_popupmenu, menu.getMenu());
-					menu.show();
+					PopupMenu pmenu = new PopupMenu(mContext,p1);
+					pmenu.getMenuInflater().inflate(R.menu.music_searchengine,pmenu.getMenu());
+					try
+					{
+						pmenu.show();
+					}
+					catch(Throwable e)
+					{
+						Log.i("log",e.getMessage());
+					}
+					return false;
 				}
 			});
 
@@ -116,7 +139,8 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	{
 		public TextView musicName,musicAuthor;
 		public RelativeLayout rootLayout;
-		public ImageView artWorkImage,popupMenu;
+		public ImageView artWorkImage;
+		public AppCompatImageView popupMenu;
 
 		public MyViewHolder(View v)
 		{
@@ -125,7 +149,7 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 			musicAuthor = (TextView) v.findViewById(R.id.list_music_boxMusicAuthor);
 			rootLayout = (RelativeLayout) v.findViewById(R.id.list_music_boxRelativeLayout);
 			artWorkImage  =  (ImageView) v.findViewById(R.id.list_music_boxImageView);
-			popupMenu = (ImageView) v.findViewById(R.id.list_music_boxMenu);
+			popupMenu = (AppCompatImageView) v.findViewById(R.id.list_music_boxMenu);
 		}
 	}
 
@@ -138,4 +162,18 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	{
 		public void OnItemPopupMenuItemClick(MenuItem item, DataList data);
 	}
+	
+	public int dpTopx(int dp)
+	{
+		int px = 0;
+		View v = LayoutInflater.from(mContext).inflate(R.layout.test,null,false);
+		px = dp * v.getLayoutParams().height;
+		return px;
+	}
+	
+	public static int dip2px(Context context, float dipValue) {  
+        final float scale = context.getResources().getDisplayMetrics().density;  
+        return (int) (dipValue * scale + 0.5f);  
+    }  
+	
 }

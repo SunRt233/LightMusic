@@ -3,7 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="68dp"
+	android:layout_height="56dp"
 	android:clickable="true"
 	android:background="?attr/selectableItemBackground"
 	android:foreground="?attr/selectableItemBackground"
@@ -14,7 +14,7 @@
 		android:layout_width="match_parent"
 		android:orientation="horizontal"
 		android:layout_marginLeft="14dp"
-		android:layout_marginRight="52dp"
+		android:paddingRight="52dp"
 		android:gravity="center">
 
 		<ImageView
@@ -30,10 +30,12 @@
 			android:orientation="vertical">
 
 			<LinearLayout
-				android:layout_height="67dp"
+				android:layout_height="55dp"
 				android:layout_width="match_parent"
 				android:orientation="vertical"
-				android:paddingLeft="10dp">
+				android:paddingLeft="10dp"
+				android:gravity="center"
+				android:paddingRight="10dp">
 
 				<TextView
 					android:id="@+id/list_music_boxMusicName"
@@ -41,7 +43,6 @@
 					android:layout_height="wrap_content"
 					android:textAppearance="?android:attr/textAppearanceMedium"
 					android:text="Large Text"
-					android:layout_marginTop="10dp"
 					android:textColor="#000000"
 					android:ellipsize="end"
 					android:maxLines="1"
@@ -50,10 +51,11 @@
 
 				<TextView
 					android:id="@+id/list_music_boxMusicAuthor"
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="Medium Text"
-					android:textColor="#000000"/>
+					android:textColor="#000000"
+					android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 			</LinearLayout>
 
@@ -74,11 +76,11 @@
 		android:clickable="true"/>
 
 	<View
-		android:background="#CCCCCC"
+		android:background="#E0E0E0"
 		android:layout_height="1dp"
 		android:layout_width="match_parent"
 		android:layout_alignParentBottom="true"
-		android:layout_marginLeft="70dp"
+		android:layout_marginLeft="32dp"
 		android:layout_marginRight="32dp"/>
 
 </RelativeLayout>
