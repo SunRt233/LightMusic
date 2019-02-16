@@ -1,14 +1,13 @@
 package com.sunrt233.lightmusic.base;
 
-import android.content.*;
 import android.content.pm.*;
+import android.support.design.widget.*;
+import android.support.v4.app.*;
 import android.support.v7.app.*;
 import android.view.*;
+import android.view.inputmethod.*;
 import android.widget.*;
-import java.io.*;
-import java.net.*;
 import java.util.*;
-import android.support.v4.app.*;
 
 public class BaseActivity extends AppCompatActivity
 {
@@ -17,12 +16,14 @@ public class BaseActivity extends AppCompatActivity
 	public int EXIT_MODE_TWICE = 1;
 	private int EXIT_MODE = 0;
 	private Object Mmsg;
+	private View snackBarRootlayout;
 
 	public void setFragment(Fragment f, int rId)
 	{
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();
 		transaction.replace(rId, f).commit();
+		
 	}
 
 	@Override
@@ -104,6 +105,7 @@ public class BaseActivity extends AppCompatActivity
 				else
 				{
 					finish();
+					System.exit(0);
 				}
 				break;
 
@@ -117,5 +119,39 @@ public class BaseActivity extends AppCompatActivity
 		Toast.makeText(getApplicationContext(), msg.toString(), time).show();
 
 	}
+	
+	public void setSnackBarRootlayout(View view)
+	{
+		snackBarRootlayout = view;
+	}
+	
+	public void showSnackBar(String msg, int time)
+	{
+		if(snackBarRootlayout == null)
+		{
+			Snackbar.make(getWindow().getDecorView(),msg,time).show();
+		}
+		else
+		{
+			Snackbar.make(snackBarRootlayout,msg,time).show();
+		}
+	}
+	
+	public void showInput(final EditText et) {
+        et.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+    }
+	
+	
+	public void hideInput() 
+	{
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+	}
+		
 }
 

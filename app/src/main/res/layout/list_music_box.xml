@@ -10,12 +10,12 @@
 	android:id="@+id/list_music_boxRelativeLayout">
 
 	<LinearLayout
-		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		android:orientation="horizontal"
 		android:layout_marginLeft="14dp"
-		android:paddingRight="52dp"
-		android:gravity="center">
+		android:gravity="center"
+		android:layout_marginRight="52dp"
+		android:layout_height="match_parent">
 
 		<ImageView
 			android:id="@+id/list_music_boxImageView"

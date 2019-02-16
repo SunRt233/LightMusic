@@ -38,8 +38,10 @@
 			android:text="轻-音乐"
 			android:textColor="#FFFFFF"
 			android:lines="1"
-			android:ellipsize="end"
-			android:ems="8"/>
+			android:ems="8"
+			android:ellipsize="marquee"
+			android:singleLine="true"
+			android:marqueeRepeatLimit="marquee_forever"/>
 
 		<TextView
 			android:id="@+id/layout_musictoolbarview__musicAuthor"

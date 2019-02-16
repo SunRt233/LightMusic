@@ -30,7 +30,8 @@ public class MusicService extends Service {
 	 */
 
     // 相同应用内部不同组件绑定，可以使用内部类以及Binder对象来返回。
-    public class MusicController extends Binder {
+    public class MusicController extends Binder implements MediaPlayer.OnPreparedListener
+	{
         public void play() {
             mPlayer.start();//开启音乐
 			playerStatus = PLAYER_PLAYING;
@@ -60,9 +61,11 @@ public class MusicService extends Service {
 				mPlayer.reset();
 				mPlayer.setDataSource(url);
 				dataSource = url;
-				mPlayer.prepare();
-				mPlayer.start();
-				playerStatus = PLAYER_PLAYING;
+				mPlayer.setOnPreparedListener(this);
+				mPlayer.prepareAsync();
+				//Thread.sleep(30);
+				//mPlayer.start();
+				
 			}
 			catch (Throwable e)
 			{
@@ -102,6 +105,30 @@ public class MusicService extends Service {
         public void setPosition (int position) {
             mPlayer.seekTo(position);//重新设定播放进度
         }
+		
+		public Handler handler = new Handler()
+		{
+
+			@Override
+			public void handleMessage(Message msg)
+			{
+				// TODO: Implement this method
+				super.handleMessage(msg);
+				if(msg.what == 1)
+				{
+					playWithUrl((String) msg.obj);
+				}
+			}
+			
+		};
+
+		@Override
+		public void onPrepared(MediaPlayer p1)
+		{
+			// TODO: Implement this method
+			mPlayer.start();
+			playerStatus = PLAYER_PLAYING;
+		}
     }
 
     /**

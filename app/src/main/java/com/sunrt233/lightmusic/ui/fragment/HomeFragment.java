@@ -4,9 +4,11 @@ import android.content.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.app.*;
+import android.support.v4.view.animation.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
+import android.widget.*;
 import com.sunrt233.lightmusic.*;
 import com.sunrt233.lightmusic.adapter.*;
 import com.sunrt233.lightmusic.data.*;
@@ -16,8 +18,13 @@ import com.sunrt233.lightmusic.ui.activity.*;
 import com.sunrt233.lightmusic.view.*;
 import com.sunrt233.lightmusic.widget.*;
 import java.util.*;
+import uk.co.samuelwall.materialtaptargetprompt.*;
 
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import com.sunrt233.lightmusic.R;
+import uk.co.samuelwall.materialtaptargetprompt.extras.focals.*;
+import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.*;
 
 public class HomeFragment extends Fragment implements MusicSearchView,Runnable, ServiceConnection, MusicRecyclerViewAdapter.OnItemClickListener
 {
@@ -30,14 +37,15 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 	private MyMusicSearchView mMyMusicSearchView;
 	private RecyclerView mRecyclerView;
 	private MusicToolBarView mMusicToolBarView;
+	private ProgressBar mProgressBar;
 	private MusicRecyclerViewAdapter mMusicRecyclerViewAdapter;
 	private ArrayList<View> viewList = new ArrayList<View>();
 	private ArrayList<String> titleList = new ArrayList<String>();
 	private Boolean isToolbarShowing = true;
 	private MusicSearchPresenter mMusicSearchPresenter;
-	private MusicPanelDialogFragment mMusicPanelDialogFragment = new MusicPanelDialogFragment();
+	private MusicPanelDialogFragment mMusicPanelDialogFragment;
 	private MusicService.MusicController musicController;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -50,8 +58,9 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 		initContents();
 		setHasOptionsMenu(true);
 
-		mMusicSearchPresenter = new MusicSearchPresenterImpl(this);
 		
+		mMusicSearchPresenter = new MusicSearchPresenterImpl(this);
+
 		Intent intent = new Intent(mainActivity, MusicService.class);
 		mainActivity.startService(intent);
 		mainActivity.bindService(intent, this, mainActivity.BIND_AUTO_CREATE);
@@ -87,6 +96,9 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 		mRecyclerView = (RecyclerView) v2.findViewById(R.id.fragment_home_tab_search_resultsView);
 		mMyMusicSearchView = (MyMusicSearchView) v2.findViewById(R.id.fragment_home_tab_search_musicSearchView);
 		mMusicToolBarView = (MusicToolBarView) view.findViewById(R.id.fragment_home_musicbar);
+		mProgressBar = (ProgressBar) v2.findViewById(R.id.fragment_home_tab_search_progressBar);
+		
+		mainActivity.setSnackBarRootlayout(mMusicToolBarView.getChildAt(0));
 	}
 
 	public void initContents()
@@ -96,13 +108,15 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 		titleList.add("我的");
 		titleList.add("搜索");
 
+		mMyMusicSearchView.setBaseActivity(mainActivity);
+
 		mMyMusicSearchView.setOnSearchStartListener(new MyMusicSearchView.OnSearchStartListener(){
 
 				@Override
 				public void onStartSearch(String keyWord)
 				{
 					// TODO: Implement this method
-					mainActivity.printToast(keyWord, 1);
+					mainActivity.showSnackBar("正在搜索\"" + keyWord + "\"", Snackbar.LENGTH_SHORT);
 					mMusicSearchPresenter.searchMusic(keyWord);
 				}
 			});
@@ -191,6 +205,17 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 				public void onMusicPlayBtnClick()
 				{
 					// TODO: Implement this method
+					if (musicController.isPlaying())
+					{
+						musicController.pause();
+						mMusicToolBarView.musicPlayBtn.setImageResource(R.drawable.ic_play_arrow);
+					}
+					else
+					{
+						musicController.play();
+						mMusicToolBarView.musicPlayBtn.setImageResource(R.drawable.ic_pause);
+					}
+
 				}
 
 				@Override
@@ -199,24 +224,67 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 					// TODO: Implement this method
 				}
 			});
+
+		/*new MaterialTapTargetSequence()
+		 .addPrompt(new MaterialTapTargetPrompt.Builder(mainActivity)
+		 .setTarget(((ViewGroup)mTabLayout.getChildAt(mTabLayout.getChildCount()-1)).getChildAt(1))
+		 .setPrimaryText("第一步")
+		 .setSecondaryText("This will show for 4 seconds")
+		 .setPromptBackground(new RectanglePromptBackground())
+		 .setPromptFocal(new RectanglePromptFocal()))
+		 .addPrompt(new MaterialTapTargetPrompt.Builder(mainActivity)
+		 .setTarget(mMyMusicSearchView)
+		 .setPrimaryText("第二步")
+		 .setSecondaryText("This will show till you press it")
+
+		 .setPromptBackground(new RectanglePromptBackground())
+		 .setPromptFocal(new RectanglePromptFocal()))
+		 .show();*/
+
+		/*for(int i = 0;i <= mTabLayout.getChildCount();i++)
+		 {
+		 //mainActivity.showSnackBar(""+i,Snackbar.LENGTH_LONG);
+		 mainActivity.printToast(""+i,0);
+		 }*/
 	}
 
 	@Override
-	public void onItemClick(View view, int position, DataList data)
+	public void onItemClick(View view, int position, final DataList data)
 	{
 		// TODO: Implement this method
-		musicController.playWithUrl(data.getMusicUrl());
+		mMusicToolBarView.setData(data);
+		if (data.getMusicUrl() == musicController.getDataSource())
+		{
+			mainActivity.showSnackBar("你点的歌曲已经在播放了哦～(￣▽￣～)~", Snackbar.LENGTH_SHORT);
+		}
+		else if (data.getMusicUrl() != "不要播放")
+		{
+			Message message = new Message();
+			message.obj = data.getMusicUrl();
+			message.what = 1;
+			musicController.handler.sendMessage(message);
+			mMusicToolBarView.musicPlayBtn.setImageResource(R.drawable.ic_pause);
+			DataRepertory.putData(data, "DataList");
+			/*Message msg = new Message();
+			 msg.what = 1;
+			 msg.obj = data;
+			 DataRepertory.putData(data,"DataList");*/
+
+			//mMusicPanelDialogFragment.mhd.handleMessage(msg);			
+		}
+		//musicController.playWithUrl(data.getMusicUrl());
+
 	}
 
 	@Override
 	public void showResults(ArrayList<DataList> dataLists, int resultSize)
 	{
 		// TODO: Implement this method
-		mainActivity.printToast("一共有" + resultSize + "个结果", 1);
+		mainActivity.showSnackBar("一共有" + resultSize + "个结果", Snackbar.LENGTH_SHORT);
 
 		if (mMusicRecyclerViewAdapter == null)
 		{
-			mMusicRecyclerViewAdapter = new MusicRecyclerViewAdapter(mainActivity.getApplicationContext(), dataLists);
+			mMusicRecyclerViewAdapter = new MusicRecyclerViewAdapter(mainActivity, mainActivity.getApplicationContext(), dataLists);
 			mMusicRecyclerViewAdapter.setOnItemClickListener(this);
 			mRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
 			mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -239,12 +307,28 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 	}
 
 	@Override
+	public void showProgressBar()
+	{
+		// TODO: Implement this method
+		mProgressBar.setVisibility(View.VISIBLE);
+		if (mMusicRecyclerViewAdapter != null) mMusicRecyclerViewAdapter.setNewList(new ArrayList<DataList>());
+	}
+
+	@Override
+	public void hideProgressBar()
+	{
+		// TODO: Implement this method
+		mProgressBar.setVisibility(View.GONE);
+	}
+
+	@Override
 	public void onServiceConnected(ComponentName p1, IBinder p2)
 	{
 		// TODO: Implement this method
 		musicController = ((MusicService.MusicController)p2);
-		//DataRepertory.putData(musicController, "musicController");
-		mainActivity.printToast("服务连接",1);
+		mMusicPanelDialogFragment = new MusicPanelDialogFragment((MusicService.MusicController)p2);
+		DataRepertory.putData(musicController, "musicController");
+		mainActivity.showSnackBar("服务连接", Snackbar.LENGTH_SHORT);
 	}
 
 	@Override
@@ -258,5 +342,24 @@ public class HomeFragment extends Fragment implements MusicSearchView,Runnable, 
 	{
 		// TODO: Implement this method
 	}
-	
+
+	private class PlayMusic extends Thread
+	{
+		private String mURL;
+		public PlayMusic(String url)
+		{
+			mURL = url;
+		}
+
+		@Override
+		public void run()
+		{
+			// TODO: Implement this method
+			super.run();
+			musicController.playWithUrl(mURL);
+			stop(new Throwable());
+		}
+
+	}
+
 }

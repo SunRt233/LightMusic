@@ -21,18 +21,21 @@ public class MusicSearchPresenterImpl implements MusicSearchPresenter
 	public void searchMusic(String keyWord)
 	{
 		// TODO: Implement this method
-		mMusicSearchModel.search(keyWord);
-		Log.i("log","Start search from MusicSearchPresenterImpl");
 		mMusicSearchModel.setOnSearchingListener(new MusicSearchModel.OnSearchingListener(){
 
 				@Override
 				public void onGettingResult(ArrayList<DataList> dataLists,int resultSize)
 				{
 					// TODO: Implement this method
+					mMusicSearchView.hideProgressBar();
 					mMusicSearchView.showResults(dataLists,resultSize);
 				}
 				
 			});
+			
+		mMusicSearchModel.search(keyWord);
+		mMusicSearchView.showProgressBar();
+		Log.i("log","Start search from MusicSearchPresenterImpl");
 	}
 
 	@Override

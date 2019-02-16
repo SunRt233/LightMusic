@@ -10,6 +10,7 @@ import android.util.*;
 
 public class MusicSearchModelImpl implements MusicSearchModel
 {
+	ArrayList<DataList> dl = new ArrayList<DataList>();
 
 	@Override
 	public void search(String keyWord)
@@ -18,6 +19,11 @@ public class MusicSearchModelImpl implements MusicSearchModel
 		Log.i("log", "Start search from MusicSearchModelImpl");
 
 		MusicSearchUtils.searchFromKuGou(keyWord, mhd);
+		
+		
+		dl.add(new DataList("Megalovania_UnderFell_Remix", "Toby_Fox", "http://127.0.0.1:8080/assets/music.mp3", "http://127.0.0.1:8099/assets/music.mp3"));
+		
+		//mOnSearchingListener.onGettingResult(dl,1);
 		Log.i("log", "Send search");
 
 	}
@@ -49,7 +55,7 @@ public class MusicSearchModelImpl implements MusicSearchModel
 					{
 						dataLists.remove(dataLists.size() - 1);
 					}
-
+					//dataLists.add(dl.get(0));
 					mOnSearchingListener.onGettingResult(dataLists,dataLists.size());
 				}
 				catch (Throwable e)

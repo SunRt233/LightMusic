@@ -10,4 +10,8 @@ public interface MusicSearchView
 	//搜索错误
 	public void searchError();
 	
+	public void showProgressBar();
+	
+	public void hideProgressBar();
+	
 }

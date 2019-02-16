@@ -31,9 +31,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		switchFragment(homefragment,R.id.activity_main_frameLayout);
 		
 		setExitMode(EXIT_MODE_TWICE);
-		
+		setSnackBarRootlayout(findViewById(R.id.activity_main_frameLayout));
 		//overridePendingTransition(R.anim.bottom_up,R.anim.bottom_down);
-		
+		navigationView.setCheckedItem(R.id.nav_homepage);
     }
 
 	@Override
@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		{
 			transaction.add(id, f, tag).commit();
 			currentFragment = f;
-			printToast("初始化成功",1);
+			//printToast("初始化成功",1);
 		}
 		else
 		{
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 			{
 				transaction.hide(currentFragment).add(id, f, tag).commit();
 				currentFragment = f;
-				printToast("添加成功",1);
+				//printToast("添加成功",1);
 			}
 			if(manager.findFragmentByTag(tag) != null&&currentFragment.getTag() != tag)
 			{
@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 				}
 				transaction.show(manager.findFragmentByTag(tag)).commit();
 				currentFragment = f;
-				printToast("显示成功",1);
+				//printToast("显示成功",1);
 			}
 		}
 	}
@@ -99,9 +99,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 		switch(p1.getItemId())
 		{
 			case R.id.nav_homepage:
-				printToast("tt",1);
+				//printToast("tt",1);
+				switchFragment(homefragment,R.id.activity_main_frameLayout);
 				break;
 			case R.id.nav_theme:
+				showSnackBar("此功能尚在开发",Snackbar.LENGTH_SHORT);
+				navigationView.setCheckedItem(R.id.nav_homepage);
 				break;
 		}
 		return true;

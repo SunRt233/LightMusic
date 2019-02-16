@@ -1,20 +1,17 @@
 package com.sunrt233.lightmusic.adapter;
 
+import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
-import com.sunrt233.lightmusic.adapter.*;
 import com.sunrt233.lightmusic.data.*;
-import com.sunrt233.lightmusic.utils.*;
+import com.sunrt233.lightmusic.ui.activity.*;
 import java.util.*;
 
 import android.support.v7.widget.PopupMenu;
-import com.sunrt233.lightmusic.ui.activity.*;
-import android.util.*;
-import android.widget.AbsoluteLayout.*;
 
 public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecyclerViewAdapter.MyViewHolder>
 {
@@ -25,6 +22,7 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	private List<Bitmap> artWorkImages = null;
 	private Context mContext;
 	private Boolean isFirstTimeToRun = true;
+	MainActivity mActivity;
 
 	public MusicRecyclerViewAdapter(ArrayList<DataList> d, View.OnClickListener onClickListener)
 	{
@@ -32,8 +30,9 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 		mOnClickListener = onClickListener;
 	}
 
-	public MusicRecyclerViewAdapter(Context context, ArrayList<DataList> d)
+	public MusicRecyclerViewAdapter(MainActivity activity,Context context, ArrayList<DataList> d)
 	{
+		mActivity = activity;
 		dl = d;
 		mContext = context;
 	}
@@ -83,14 +82,14 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 					// TODO: Implement this method
 				}
 			});
-
-		holder.popupMenu.setOnTouchListener(new AppCompatImageView.OnTouchListener(){
+			
+		holder.popupMenu.setOnClickListener(new View.OnClickListener(){
 
 				@Override
-				public boolean onTouch(View p1, MotionEvent p2)
+				public void onClick(View p1)
 				{
 					// TODO: Implement this method
-					PopupMenu pmenu = new PopupMenu(mContext,p1);
+					PopupMenu pmenu = new PopupMenu(mActivity,holder.popupMenu);
 					pmenu.getMenuInflater().inflate(R.menu.music_searchengine,pmenu.getMenu());
 					try
 					{
@@ -98,11 +97,12 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 					}
 					catch(Throwable e)
 					{
-						Log.i("log",e.getMessage());
+						Toast.makeText(mContext,e.toString(),1).show();
+						//Log.i("log",e.getMessage());
 					}
-					return false;
 				}
 			});
+
 
 //		menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
 //

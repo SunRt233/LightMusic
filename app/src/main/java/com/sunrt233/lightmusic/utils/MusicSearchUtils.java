@@ -23,6 +23,7 @@ class getFromKuGou extends Thread
 {
 	private Handler mhd;
 	private String keyWord;
+	long startTime,endTime = 0;
 
 	public getFromKuGou(String key,Handler h)
 	{
@@ -36,7 +37,7 @@ class getFromKuGou extends Thread
 		super.run();
 		// TODO: Implement this method
 		ArrayList<DataList> songsList = new ArrayList<DataList>();
-		String engineUrl = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=KEYWORD&page=1&pagesize=100&showtype=1";
+		String engineUrl = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=KEYWORD&page=1&pagesize=20&showtype=1";
 		String[] input = engineUrl.split("KEYWORD");
 		String url = input[0] + keyWord + input[1];
 

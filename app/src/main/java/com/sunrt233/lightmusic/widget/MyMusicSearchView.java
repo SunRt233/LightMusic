@@ -1,5 +1,6 @@
 package com.sunrt233.lightmusic.widget;
 
+import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.support.v7.widget.*;
@@ -10,9 +11,12 @@ import android.widget.*;
 import com.sunrt233.lightmusic.*;
 
 import android.support.v7.widget.PopupMenu;
+import com.sunrt233.lightmusic.base.*;
 
 public class MyMusicSearchView extends RelativeLayout
 {
+	private BaseActivity mBaseActivity;
+	private Context mContext;
 	private LinearLayout rootlayout;
 	private AppCompatImageView imgView;
 	private AppCompatEditText editText;
@@ -23,6 +27,7 @@ public class MyMusicSearchView extends RelativeLayout
 	public MyMusicSearchView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		
 
 		LayoutInflater.from(context).inflate(R.layout.layout_musicsearchview, this, true);
 
@@ -61,7 +66,7 @@ public class MyMusicSearchView extends RelativeLayout
 		menu.getMenuInflater().inflate(R.menu.music_searchengine, menu.getMenu());
 
 		initListeners();
-
+		
 	}
 
 	private void initListeners()
@@ -86,6 +91,10 @@ public class MyMusicSearchView extends RelativeLayout
 								editText.setText("关键字不能为空！");
 							}
 						}
+						editText.setFocusable(true);
+						editText.clearFocus();
+						if(mBaseActivity != null) mBaseActivity.hideInput();
+						
 					}
 
 					return false;
@@ -128,5 +137,24 @@ public class MyMusicSearchView extends RelativeLayout
 
 	}          
 	
-
+	public void setBaseActivity(BaseActivity ba)
+	{
+		mBaseActivity = ba;
+	}
+	
+	public void hideInput()
+	{
+		try{
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View v = ((Activity)mContext).getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+		}
+		catch(Throwable e)
+		{
+			Toast.makeText(mContext,e.toString(),1).show();
+		}
+	}
+	
 }

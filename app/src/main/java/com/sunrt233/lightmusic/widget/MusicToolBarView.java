@@ -6,13 +6,14 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
+import com.sunrt233.lightmusic.data.*;
 
 public class MusicToolBarView extends FrameLayout
 {
 	private Context mContext;
-	private FrameLayout rootLayout;
-	private AppCompatImageView artWorkImage,previousMusicBtn,musicPlayBtn,nextMusicBtn;
-	private TextView musicName,musicAuthor;
+	public FrameLayout rootLayout;
+	public AppCompatImageView artWorkImage,previousMusicBtn,musicPlayBtn,nextMusicBtn;
+	public TextView musicName,musicAuthor;
 	private FunctionListener mFunctionListener;
 	
 	public MusicToolBarView(Context context, AttributeSet attrs)
@@ -35,6 +36,7 @@ public class MusicToolBarView extends FrameLayout
 		previousMusicBtn = (AppCompatImageView) findViewById(R.id.layout_musictoolbarview_previousMusicBtn);
 		musicPlayBtn = (AppCompatImageView) findViewById(R.id.layout_musictoolbarview__musicPlayBtn);
 		nextMusicBtn = (AppCompatImageView) findViewById(R.id.layout_musictoolbarview_nextMusicBtn);
+		musicName.setSelected(true);
 	}
 	
 	public void setFunctionListener(FunctionListener functionListener)
@@ -54,36 +56,33 @@ public class MusicToolBarView extends FrameLayout
 				}
 			});
 			
-		previousMusicBtn.setOnTouchListener(new OnTouchListener(){
+		previousMusicBtn.setOnClickListener(new View.OnClickListener(){
 
 				@Override
-				public boolean onTouch(View p1, MotionEvent p2)
+				public void onClick(View p1)
 				{
 					// TODO: Implement this method
 					if(mFunctionListener != null) mFunctionListener.onPreviousMusicBtnClick();
-					return false;
 				}
 			});
 			
-		musicPlayBtn.setOnTouchListener(new OnTouchListener(){
+		musicPlayBtn.setOnClickListener(new View.OnClickListener(){
 
 				@Override
-				public boolean onTouch(View p1, MotionEvent p2)
+				public void onClick(View p1)
 				{
 					// TODO: Implement this method
 					if(mFunctionListener != null) mFunctionListener.onMusicPlayBtnClick();
-					return false;
 				}
 			});
 			
-		nextMusicBtn.setOnTouchListener(new OnTouchListener(){
+		nextMusicBtn.setOnClickListener(new View.OnClickListener(){
 
 				@Override
-				public boolean onTouch(View p1, MotionEvent p2)
+				public void onClick(View p1)
 				{
 					// TODO: Implement this method
 					if(mFunctionListener != null) mFunctionListener.onNextMusicBtnClick();
-					return false;
 				}
 			});
 	}
@@ -96,6 +95,20 @@ public class MusicToolBarView extends FrameLayout
 	public void setMusicAuthor(String author)
 	{
 		musicAuthor.setText(author);
+	}
+	
+	public void setData(DataList data)
+	{
+		if(data != null)
+		{
+			setMusicName(data.getMusicName());
+			setMusicAuthor(data.getMusicAuthor());
+		}
+		else
+		{
+			setMusicName("Error");
+			setMusicAuthor("The data can not be null");
+		}
 	}
 	
 	public interface FunctionListener
