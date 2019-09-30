@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<declare-styleable name="ShadowCardLayout">
+		<attr name="layoutRadius" format="dimension"></attr>
+		<attr name="shadowColor" format="color"></attr>
+		<attr name="layoutElevation" format="dimension"></attr>
+		<attr name="layoutBackgroundColor" format="color"></attr>
+	</declare-styleable>
+
+</resources>

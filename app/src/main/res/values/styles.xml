@@ -3,9 +3,9 @@
     <style name="AppTheme" parent="BaseTheme">
 		<item name="colorPrimary">#2196F3</item>
 		<item name="colorPrimaryDark">#1976D2</item>
-		<item name="android:colorEdgeEffect">#2196F3</item>
+		<item name="android:colorEdgeEffect">#DDDDDD</item>
 	</style>
-	<style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+	<style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 	</style>

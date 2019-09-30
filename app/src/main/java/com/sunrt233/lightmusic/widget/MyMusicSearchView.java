@@ -12,17 +12,19 @@ import com.sunrt233.lightmusic.*;
 
 import android.support.v7.widget.PopupMenu;
 import com.sunrt233.lightmusic.base.*;
+import android.text.*;
 
 public class MyMusicSearchView extends RelativeLayout
 {
 	private BaseActivity mBaseActivity;
 	private Context mContext;
 	private LinearLayout rootlayout;
-	private AppCompatImageView imgView;
+	private AppCompatImageView imgView,cleanBtn;
 	private AppCompatEditText editText;
 	private OnSearchStartListener onSearchStartListener;
 	private PopupMenu menu;
 	private Boolean isFisrtTimeToEnter = true;
+
 
 	public MyMusicSearchView(Context context, AttributeSet attrs)
 	{
@@ -33,6 +35,7 @@ public class MyMusicSearchView extends RelativeLayout
 
 		rootlayout = (LinearLayout) findViewById(R.id.layout_musicsearchview_rootlayout);
 		imgView = (AppCompatImageView) findViewById(R.id.layout_musicsearchview_imgBtn);
+		cleanBtn = (AppCompatImageView) findViewById(R.id.layout_musicsearchview_cleanBtn);
 		editText = (AppCompatEditText) findViewById(R.id.layout_musicsearchview_editText);
 
 		//监听软键盘是否显示或隐藏
@@ -43,19 +46,29 @@ public class MyMusicSearchView extends RelativeLayout
 				{
 					Rect r = new Rect();
 					rootlayout.getWindowVisibleDisplayFrame(r);
-					int screenHeight = rootlayout.getRootView()
-						.getHeight();
+					int screenHeight = rootlayout.getRootView().getHeight();
 					int heightDifference = screenHeight - (r.bottom);
+					
 					if (heightDifference > 200)
 					{
 						//软键盘显示
 // changeKeyboardHeight(heightDifference);
+						editText.setFocusable(true);
+						editText.setFocusableInTouchMode(true);
+						editText.requestFocus();
+						editText.setCursorVisible(true);
+						cleanBtn.setVisibility(View.VISIBLE);
+						Toast.makeText(mBaseActivity.getApplicationContext(), "显示", 1).show();
 					}
 					else
 					{
 						//软键盘隐藏
 						editText.setFocusable(true);
+						editText.setFocusableInTouchMode(true);
 						editText.clearFocus();
+						editText.setCursorVisible(false);
+						cleanBtn.setVisibility(View.GONE);
+						Toast.makeText(mBaseActivity.getApplicationContext(),"关闭",1).show();
 					}
 				}
 
@@ -101,17 +114,27 @@ public class MyMusicSearchView extends RelativeLayout
 				}
 			});
 
-		imgView.setOnTouchListener(new AppCompatImageView.OnTouchListener(){
+		imgView.setOnClickListener(new View.OnClickListener(){
 
 				@Override
-				public boolean onTouch(View p1, MotionEvent p2)
+				public void onClick(View p1)
 				{
 					// TODO: Implement this method
 					menu.show();
-					return false;
+					
 				}
 			});
+			
+		cleanBtn.setOnClickListener(new View.OnClickListener(){
 
+				@Override
+				public void onClick(View p1)
+				{
+					// TODO: Implement this method
+					editText.setText("");
+				}
+			});
+		
 	}
 
 	public void setOnSearchStartListener(MyMusicSearchView.OnSearchStartListener mOnSearchStartListener)
@@ -149,6 +172,7 @@ public class MyMusicSearchView extends RelativeLayout
         View v = ((Activity)mContext).getWindow().peekDecorView();
         if (null != v) {
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+			
         }
 		}
 		catch(Throwable e)
@@ -157,4 +181,11 @@ public class MyMusicSearchView extends RelativeLayout
 		}
 	}
 	
+	
+	public boolean isOpen()
+	{
+		
+			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+			return imm.isActive();
+	}
 }

@@ -1,12 +1,12 @@
 package com.sunrt233.lightmusic.model;
 
-import com.sunrt233.lightmusic.model.MusicSearchModel.*;
-import com.sunrt233.lightmusic.utils.*;
-import android.os.*;
-import java.util.*;
-import com.sunrt233.lightmusic.data.*;
-import android.util.*;
 
+import android.os.*;
+import android.util.*;
+import com.sunrt233.music.*;
+import java.util.*;
+import org.jsoup.nodes.*;
+import android.widget.*;
 
 public class MusicSearchModelImpl implements MusicSearchModel
 {
@@ -18,12 +18,28 @@ public class MusicSearchModelImpl implements MusicSearchModel
 		// TODO: Implement this method
 		Log.i("log", "Start search from MusicSearchModelImpl");
 
-		MusicSearchUtils.searchFromKuGou(keyWord, mhd);
+		// Remove by SunRt233 2019.6.27 11:21
+		//MusicSearchUtils.searchFromKuGou(keyWord, mhd);
 		
 		
-		dl.add(new DataList("Megalovania_UnderFell_Remix", "Toby_Fox", "http://127.0.0.1:8080/assets/music.mp3", "http://127.0.0.1:8099/assets/music.mp3"));
+		//dl.add(new DataList("Megalovania_UnderFell_Remix", "Toby_Fox", "http://127.0.0.1:8080/assets/music.mp3", "http://127.0.0.1:8099/assets/music.mp3"));
 		
 		//mOnSearchingListener.onGettingResult(dl,1);
+		
+		
+		MusicSearch.searchFromNetease(new ResultCallBack(){
+
+				@Override
+				public void result(Document connection, ArrayList<com.sunrt233.music.DataList> songInfo, int pagesize, int page)
+				{
+					// TODO: Implement this method
+					
+					if(mOnSearchingListener != null) mOnSearchingListener.onGettingResult(songInfo,songInfo.size());
+					
+				}
+			}, keyWord, 20, 0);
+		
+		
 		Log.i("log", "Send search");
 
 	}

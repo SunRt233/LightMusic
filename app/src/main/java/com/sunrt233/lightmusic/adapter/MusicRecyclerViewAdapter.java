@@ -1,14 +1,14 @@
 package com.sunrt233.lightmusic.adapter;
 
-import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
-import com.sunrt233.lightmusic.data.*;
+import com.sunrt233.lightmusic.adapter.*;
 import com.sunrt233.lightmusic.ui.activity.*;
+import com.sunrt233.music.*;
 import java.util.*;
 
 import android.support.v7.widget.PopupMenu;
@@ -55,14 +55,6 @@ public class MusicRecyclerViewAdapter extends RecyclerView.Adapter<MusicRecycler
 	public void onBindViewHolder(final MusicRecyclerViewAdapter.MyViewHolder holder, final int p2)
 	{
 		// TODO: Implement this method
-		
-		/*if(p2 == 0 && isFirstTimeToRun)
-		{
-			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(holder.rootLayout.getLayoutParams());
-			lp.setMargins(0,dip2px(mContext,68),0,0);
-			holder.rootLayout.setLayoutParams(lp);
-			isFirstTimeToRun = false;
-		}*/
 
 		holder.musicName.setText(dl.get(p2).getMusicName());
 		holder.musicAuthor.setText(dl.get(p2).getMusicAuthor());

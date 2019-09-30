@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:paddingTop="6dp"
+	android:paddingLeft="6dp"
+	android:paddingRight="6dp">
+
+	<android.support.v7.widget.CardView
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		app:cardElevation="2dp"
+		app:cardCornerRadius="2dp"
+		app:cardUseCompatPadding="true"
+		android:paddingTop="4dp">
+
+		<LinearLayout
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:app="http://schemas.android.com/apk/res-auto"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:background="#FAFAFA">
+
+			<LinearLayout
+				android:id="@+id/fragment_home_tab_songs_btnLocalMusic"
+				android:layout_height="50dp"
+				android:layout_width="match_parent"
+				android:paddingRight="10dp"
+				android:paddingLeft="10dp"
+				android:clickable="true"
+				android:background="?attr/selectableItemBackground">
+
+				<android.support.v7.widget.AppCompatImageView
+					android:layout_height="50dp"
+					android:layout_width="50dp"
+					app:srcCompat="@drawable/ic_queue_music"
+					android:scaleType="center"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:text="Large Text"
+					android:gravity="left|center"
+					android:paddingLeft="14dp"
+					android:textColor="#000000"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</android.support.v7.widget.CardView>
+
+</RelativeLayout>
+

@@ -1,12 +1,12 @@
 package com.sunrt233.lightmusic.utils;
 
 import android.os.*;
+import android.util.*;
+import com.sunrt233.music.*;
 import java.util.*;
 import org.json.*;
 import org.jsoup.*;
 import org.jsoup.nodes.*;
-import com.sunrt233.lightmusic.data.*;
-import android.util.*;
 
 public class MusicSearchUtils
 {

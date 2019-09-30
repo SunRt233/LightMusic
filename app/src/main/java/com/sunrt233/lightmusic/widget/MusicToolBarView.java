@@ -1,12 +1,14 @@
 package com.sunrt233.lightmusic.widget;
 
 import android.content.*;
+import android.graphics.drawable.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import com.sunrt233.lightmusic.*;
-import com.sunrt233.lightmusic.data.*;
+import com.sunrt233.lightmusic.utils.*;
+import com.sunrt233.music.*;
 
 public class MusicToolBarView extends FrameLayout
 {
@@ -97,12 +99,23 @@ public class MusicToolBarView extends FrameLayout
 		musicAuthor.setText(author);
 	}
 	
+	public void setArtWorkImg(Drawable drawable)
+	{
+		artWorkImage.setImageDrawable(drawable);
+	}
+	
+	public void setArtWorkImgFromUrl(String url)
+	{
+		BitmapUtils.setBitmapFromNetWork(url, artWorkImage, 1/4);
+	}
+	
 	public void setData(DataList data)
 	{
 		if(data != null)
 		{
 			setMusicName(data.getMusicName());
 			setMusicAuthor(data.getMusicAuthor());
+			setArtWorkImgFromUrl(data.getImageUrl());
 		}
 		else
 		{

@@ -5,26 +5,42 @@
 	android:layout_width="match_parent"
 	android:layout_height="48dp"
 	android:orientation="horizontal"
-	android:focusable="true"
-	android:focusableInTouchMode="true"
 	android:id="@+id/layout_musicsearchview_rootlayout">
 
 	<android.support.v7.widget.AppCompatImageView
 		android:id="@+id/layout_musicsearchview_imgBtn"
+		android:background="?attr/selectableItemBackgroundBorderless"
 		android:scaleType="center"
 		app:srcCompat="@drawable/ic_search"
 		android:focusable="true"
 		android:layout_height="48dp"
 		android:layout_width="48dp"/>
 
-	<android.support.v7.widget.AppCompatEditText
-		android:id="@+id/layout_musicsearchview_editText"
-		android:hint="歌曲/歌手"
-		android:singleLine="true"
-		android:layout_height="48dp"
-		android:layout_width="match_parent"
-		android:textCursorDrawable="@drawable/edittext_cursor"
-		android:background="@null"/>
+	<RelativeLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent">
+
+		<android.support.v7.widget.AppCompatEditText
+			android:id="@+id/layout_musicsearchview_editText"
+			android:hint="歌曲/歌手"
+			android:singleLine="true"
+			android:imeOptions="actionSearch"
+			android:layout_height="48dp"
+			android:layout_width="match_parent"
+			android:textCursorDrawable="@drawable/edittext_cursor"
+			android:background="@null"/>
+
+		<android.support.v7.widget.AppCompatImageView
+			android:id="@+id/layout_musicsearchview_cleanBtn"
+			android:background="?attr/selectableItemBackgroundBorderless"
+			android:layout_height="48dp"
+			android:layout_width="48dp"
+			app:srcCompat="@drawable/ic_close_black"
+			android:layout_alignParentRight="true"
+			android:visibility="gone"
+			android:scaleType="center"/>
+
+	</RelativeLayout>
 
 </LinearLayout>
 

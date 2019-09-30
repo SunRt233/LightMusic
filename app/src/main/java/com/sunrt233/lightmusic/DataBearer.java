@@ -2,7 +2,7 @@ package com.sunrt233.lightmusic;
 
 import com.sunrt233.lightmusic.service.*;
 import java.util.*;
-import com.sunrt233.lightmusic.data.*;
+import com.sunrt233.music.DataList;
 
 public class DataBearer
 {

@@ -1,6 +1,6 @@
 package com.sunrt233.lightmusic.model;
 
-import com.sunrt233.lightmusic.data.*;
+import com.sunrt233.music.*;
 import java.util.*;
 
 public interface MusicSearchModel

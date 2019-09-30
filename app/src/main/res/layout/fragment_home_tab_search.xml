@@ -2,49 +2,62 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:paddingTop="6dp"
+	android:paddingLeft="6dp"
+	android:paddingRight="6dp">
 
 	<android.support.v7.widget.CardView
+		android:layout_height="match_parent"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/main_card_margin_vertical"
-		android:layout_marginStart="@dimen/main_card_margin_horizontal"
-		android:layout_marginEnd="@dimen/main_card_margin_horizontal"
-		android:layout_marginTop="@dimen/main_card_margin_vertical"
-		app:cardCornerRadius="4dp"
-		app:cardElevation="4dp"
-		android:id="@+id/fragmenthometabsearchCardView1">
+		app:cardElevation="2dp"
+		app:cardCornerRadius="2dp"
+		app:cardUseCompatPadding="true"
+		android:paddingTop="4dp">
 
-		<com.sunrt233.lightmusic.widget.MyMusicSearchView
-			android:id="@+id/fragment_home_tab_search_musicSearchView"
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"/>
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:background="#FFFFFF">
+
+			<com.sunrt233.lightmusic.widget.MyMusicSearchView
+				android:id="@+id/fragment_home_tab_search_musicSearchView"
+				android:layout_width="match_parent"
+				android:layout_height="56dp"
+				android:gravity="center"/>
+
+			<View
+				android:background="?android:attr/dividerVertical"
+				android:layout_height="1dp"
+				android:layout_width="match_parent"/>
+
+			<FrameLayout
+				android:layout_height="match_parent"
+				android:layout_width="match_parent">
+
+				<android.support.v7.widget.RecyclerView
+					android:id="@+id/fragment_home_tab_search_resultsView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"/>
+
+				<ProgressBar
+					style="Widget_AppCompat_ProgressBar"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:layout_gravity="center"
+					android:indeterminateTint="?attr/colorPrimary"
+					android:indeterminateTintMode="src_atop"
+					android:visibility="gone"
+					android:id="@+id/fragment_home_tab_search_progressBar"/>
+
+			</FrameLayout>
+
+		</LinearLayout>
 
 	</android.support.v7.widget.CardView>
-
-	<FrameLayout
-		android:layout_below="@id/fragmenthometabsearchCardView1"
-		android:layout_height="match_parent"
-		android:layout_width="match_parent">
-
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/fragment_home_tab_search_resultsView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
-
-		<ProgressBar
-			style="Widget_AppCompat_ProgressBar"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_gravity="center"
-			android:indeterminateTint="?attr/colorPrimary"
-			android:indeterminateTintMode="src_atop"
-			android:visibility="gone"
-			android:id="@+id/fragment_home_tab_search_progressBar"/>
-
-	</FrameLayout>
 
 </RelativeLayout>
 

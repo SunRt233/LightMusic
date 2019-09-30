@@ -1,9 +1,10 @@
 package com.sunrt233.lightmusic.presenter;
-import com.sunrt233.lightmusic.view.*;
-import com.sunrt233.lightmusic.model.*;
+
 import android.util.*;
+import com.sunrt233.lightmusic.model.*;
+import com.sunrt233.lightmusic.view.*;
+import com.sunrt233.music.*;
 import java.util.*;
-import com.sunrt233.lightmusic.data.*;
 
 public class MusicSearchPresenterImpl implements MusicSearchPresenter
 {
@@ -27,6 +28,7 @@ public class MusicSearchPresenterImpl implements MusicSearchPresenter
 				public void onGettingResult(ArrayList<DataList> dataLists,int resultSize)
 				{
 					// TODO: Implement this method
+					mMusicSearchView.searchError(dataLists.get(0).toString());
 					mMusicSearchView.hideProgressBar();
 					mMusicSearchView.showResults(dataLists,resultSize);
 				}
