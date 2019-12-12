@@ -15,6 +15,8 @@ public class LocalMusicActivity extends BaseActivity
 		// TODO: Implement this method
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_localmusic);
+		
+		initToolbar();
 	}
 	
 	private void initToolbar()
